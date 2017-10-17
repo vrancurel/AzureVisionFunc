@@ -9,6 +9,8 @@ using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
 using System;
 using System.IO;
+using System.Net.Http.Formatting;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace NotHotdogFunc
@@ -72,7 +74,10 @@ namespace NotHotdogFunc
 			string json = JsonConvert.SerializeObject(obj);
 
 			// reutrn the boolean as a plain text string
-			return req.CreateResponse(HttpStatusCode.OK, json, "application/json");
+			return new HttpResponseMessage(HttpStatusCode.OK)
+			{
+				Content = new StringContent(json, Encoding.UTF8, JsonMediaTypeFormatter.DefaultMediaType.ToString())
+			};
 		}
 	}
 }
