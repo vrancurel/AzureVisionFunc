@@ -34,14 +34,22 @@ namespace NotHotdogFunc
 			if(req.Method.Method == "POST")
 			{
 				Stream stream = await req.Content.ReadAsStreamAsync();
-				result = await vsc.AnalyzeImageAsync(stream, vf);
+				try
+				{
+					result = await vsc.AnalyzeImageAsync(stream, vf);
+				}
+				catch {}
 			}
 
 			// else, if it's a GET method, we assume there's a URL on the query string, pointing to a valid image
 			else if(req.Method.Method == "GET")
 			{
 				url = req.GetQueryNameValuePairs().FirstOrDefault(q => string.Compare(q.Key, "url", true) == 0).Value;
-				result = await vsc.AnalyzeImageAsync(url, vf);
+				try
+				{
+					result = await vsc.AnalyzeImageAsync(url, vf);
+				}
+				catch {}
 			}
 
 			// if we didn't get a result from the service, return a 400
@@ -56,9 +64,9 @@ namespace NotHotdogFunc
 
 			foreach(Tag t in result.Tags)
 			{
-				if(t.Name.ToLowerInvariant() == ("hot"))
+				if(t.Name.ToLowerInvariant() == "hot")
 					hot = true;
-				else if(t.Name.ToLowerInvariant() == ("dog"))
+				else if(t.Name.ToLowerInvariant() == "dog")
 					dog = true;
 
 				if(hot && dog)
