@@ -56,29 +56,29 @@ namespace NotHotdogFunc
 			if(result == null)
 				return req.CreateResponse(HttpStatusCode.BadRequest);
 
-			// otherwise, check to see if we got "hotdog" or "hot dog" in the tags (I've seen both)
-			if(result.Tags.Select(tag => tag.Name.ToLowerInvariant()).Contains("hotdog"))
-				return GetResponse(req, true);
+			return GetResponse(req, result.Tags);
+		}
+
+		private static HttpResponseMessage GetResponse(HttpRequestMessage req, Tag[] tagList)
+		{
+			// does the list contain a single tag named "hotdog"
+			bool hotdog = tagList.Select(tag => tag.Name.ToLowerInvariant()).Contains("hotdog");
 
 			bool hot = false, dog = false;
 
-			foreach(Tag t in result.Tags)
+			// otherwise, check to see if we got "hotdog" or "hot dog" in the tags (I've seen both)
+			foreach(Tag t in tagList)
 			{
 				if(t.Name.ToLowerInvariant() == "hot")
 					hot = true;
 				else if(t.Name.ToLowerInvariant() == "dog")
-					dog = true;
-
-				if(hot && dog)
-					return GetResponse(req, true);
+					dog = true;		
 			}
 
-			return GetResponse(req, false);
-		}
+			if(hot && dog)
+				hotdog = true;
 
-		private static HttpResponseMessage GetResponse(HttpRequestMessage req, bool hotdog)
-		{
-			var obj = new { isHotdog = hotdog.ToString().ToLowerInvariant() };
+			var obj = new { isHotdog = hotdog.ToString().ToLowerInvariant(), tags = tagList.Select(t => t.Name) };
 			string json = JsonConvert.SerializeObject(obj);
 
 			// reutrn the boolean as a plain text string
