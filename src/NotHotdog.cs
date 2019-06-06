@@ -30,7 +30,7 @@ namespace NotHotdogFunc
 			AnalysisResult result = null;
 			string url = string.Empty;
 
-                        log.LogInformation("Calling Vision API");
+                        log.Info("Calling Vision API");
 
 			// if it's a POST method, we read the content as a byte array and assume it's an image
 			if(req.Method.Method == "POST")
@@ -42,7 +42,7 @@ namespace NotHotdogFunc
 				}
       				catch (ClientException e)
                                 {
-                                        log.LogInformation("Vision client error: " + e.Error.Message);
+                                        log.Info("Vision client error: " + e.Error.Message);
                                 }
 			}
 
@@ -56,7 +56,7 @@ namespace NotHotdogFunc
 				}
 				catch (ClientException e)
                                 {
-                                        log.LogInformation("Vision client error: " + e.Error.Message);
+                                        log.Info("Vision client error: " + e.Error.Message);
                                 }
 			}
 
