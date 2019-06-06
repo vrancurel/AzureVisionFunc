@@ -38,7 +38,10 @@ namespace NotHotdogFunc
 				{
 					result = await vsc.AnalyzeImageAsync(stream, vf);
 				}
-				catch {}
+      				catch (ClientException e)
+                                {
+                                        Console.WriteLine("Vision client error: " + e.Error.Message);
+                                }
 			}
 
 			// else, if it's a GET method, we assume there's a URL on the query string, pointing to a valid image
@@ -49,7 +52,10 @@ namespace NotHotdogFunc
 				{
 					result = await vsc.AnalyzeImageAsync(url, vf);
 				}
-				catch {}
+				catch (ClientException e)
+                                {
+                                        Console.WriteLine("Vision client error: " + e.Error.Message);
+                                }
 			}
 
 			// if we didn't get a result from the service, return a 400
