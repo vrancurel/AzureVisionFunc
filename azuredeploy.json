@@ -29,7 +29,7 @@
 		},
 		"repoUrl": {
 			"type": "string",
-			"defaultValue": "https://github.com/BrianPeek/NotHotdogFunc.git"
+			"defaultValue": "https://github.com/vrancurel/NotHotdogFunc.git"
 		},
 		"branch": {
 			"type": "string",
