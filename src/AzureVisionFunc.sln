@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26510.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotHotdogFunc", "NotHotdogFunc.csproj", "{BF60963B-9B50-4FED-A42C-307B0B712244}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureVisionFunc", "AzureVisionFunc.csproj", "{BF60963B-9B50-4FED-A42C-307B0B712244}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -2,6 +2,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
@@ -13,11 +14,11 @@ using System.Net.Http.Formatting;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace NotHotdogFunc
+namespace AzureVisionFunc
 {
-	public static class NotHotdog
+	public static class AzureVision
 	{
-		[FunctionName("NotHotdog")]
+		[FunctionName("AzureVision")]
 		public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
 		{
 			// grab the key and URI from the portal config
@@ -69,27 +70,15 @@ namespace NotHotdogFunc
 
 		private static HttpResponseMessage GetResponse(HttpRequestMessage req, Tag[] tagList)
 		{
-			// does the list contain a single tag named "hotdog"
-			bool hotdog = tagList.Select(tag => tag.Name.ToLowerInvariant()).Contains("hotdog");
+                        Dictionary<string, string> obj = new Dictionary<string, string>();
 
-			bool hot = false, dog = false;
-
-			// otherwise, check to see if we got "hotdog" or "hot dog" in the tags (I've seen both)
-			foreach(Tag t in tagList)
+                        foreach(Tag t in tagList)
 			{
-				if(t.Name.ToLowerInvariant() == "hot")
-					hot = true;
-				else if(t.Name.ToLowerInvariant() == "dog")
-					dog = true;		
+                                obj.Add(t.Name, t.Confidence.ToString());
 			}
 
-			if(hot && dog)
-				hotdog = true;
-
-			var obj = new { isHotdog = hotdog.ToString().ToLowerInvariant(), tags = tagList.Select(t => t.Name) };
 			string json = JsonConvert.SerializeObject(obj);
 
-			// reutrn the boolean as a plain text string
 			return new HttpResponseMessage(HttpStatusCode.OK)
 			{
 				Content = new StringContent(json, Encoding.UTF8, JsonMediaTypeFormatter.DefaultMediaType.ToString())

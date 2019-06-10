@@ -29,7 +29,7 @@
 		},
 		"repoUrl": {
 			"type": "string",
-			"defaultValue": "https://github.com/vrancurel/NotHotdogFunc.git"
+			"defaultValue": "https://github.com/vrancurel/AzureVisionFunc.git"
 		},
 		"branch": {
 			"type": "string",
