@@ -19,7 +19,7 @@ namespace AzureVisionFunc
 	public static class AzureVision
 	{
 		[FunctionName("AzureVision")]
-		public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
+		public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
 		{
 			// grab the key and URI from the portal config
 			string visionKey = Environment.GetEnvironmentVariable("VisionKey");
